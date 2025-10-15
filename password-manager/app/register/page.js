@@ -236,7 +236,7 @@ const Register = () => {
         <label className="flex items-center space-x-2 mb-4">
           <input required type="checkbox" className="accent-[#6c63ff] w-3 h-3 rounded-full" />
           <span className="text-gray-400 text-sm">
-            I agree to the<Link href="/login" className="text-primary hover:underline"> Terms of Service</Link> and<Link href="/login" className="text-primary hover:underline"> Privacy Policy</Link>
+            I agree to the <Link href="/login" className="text-primary hover:underline">Terms of Service</Link> and<Link href="/login" className="text-primary hover:underline"> Privacy Policy</Link>
           </span>
         </label>
 

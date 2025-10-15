@@ -205,11 +205,12 @@ const Login = () => {
                         {isLoading ? 'Signing In...' : 'Sign In'}
                     </button>
                     <p className="text-center text-sm text-gray-400">
-                        Don't have an account?{" "}
+                        Don&apos;t have an account?{" "}
                         <Link href="/register" className="text-[#6C5CE7] hover:underline">
                             Create account
                         </Link>
                     </p>
+
                 </div>
             </div>
         </div>
