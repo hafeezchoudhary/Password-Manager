@@ -30,10 +30,11 @@
     }, [status, router]);
 
     useEffect(() => {
-        if (session) {
+    if (session) {
         fetchPasswords();
-        }
-    }, [session]);
+    }
+}, [session, fetchPasswords]);
+
 
     useEffect(() => {
         if (searchTerm === '') {
@@ -57,25 +58,24 @@
         }
     }, [searchTerm, passwords]);
 
-    const fetchPasswords = async () => {
-        setIsLoading(true);
-        try {
+    const fetchPasswords = useCallback(async () => {
+    setIsLoading(true);
+    try {
         const response = await fetch('/api/passwords', {
-            headers: {
-            'Authorization': `Bearer ${session.user.id}`
-            }
+            headers: { 'Authorization': `Bearer ${session.user.id}` }
         });
         if (response.ok) {
             const data = await response.json();
             setPasswords(data);
             setFilteredPasswords(data);
         }
-        } catch (error) {
+    } catch (error) {
         setDeleteError('Error fetching passwords');
-        } finally {
+    } finally {
         setIsLoading(false);
-        }
-    };
+    }
+}, [session]);
+
 
     // const handleLogout = () => {
     //     signOut({ callbackUrl: '/' });

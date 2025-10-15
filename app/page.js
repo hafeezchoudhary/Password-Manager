@@ -59,7 +59,7 @@ export default function Home() {
           newestOnTop={false}
           closeOnClick
           draggable
-          theme="dark"/>
+          theme="dark" />
         {/* Icon */}
         <div className="flex justify-center items-center space-x-3 mt-10">
           <div className="w-16 h-16 bg-button-gradient rounded-2xl flex items-center justify-center">
@@ -131,9 +131,10 @@ export default function Home() {
                   Zero-Knowledge Architecture
                 </h3>
                 <p className="text-gray-400 text-sm">
-                  We can't see your passwords even if we wanted to. Your master
+                  We can&apos;t see your passwords even if we wanted to. Your master
                   password is the only key to your vault
                 </p>
+
               </div>
 
               {/* Card 3 */}
@@ -176,18 +177,19 @@ export default function Home() {
               <h2 className="text-xl font-semibold mb-3">
                 Ready to Secure Your Digital Life?
               </h2>
-              <p className="text-gray-400 mb-8">
-                Join thousands of users who trust SecureVault to protect their most
-                important passwords.
+              <p className="text-gray-400">
+                Join thousands of users who trust SecureVault to protect their most important passwords.
               </p>
+
 
               {/* Buttons */}
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 {/* Create Account Button */}
-                <a href='/register' className="flex items-center justify-center gap-2 bg-button-gradient px-4 py-3 rounded-lg text-white text-sm font-semibold hover:opacity-90 transition hover:cursor-pointer">
+                <Link href="/register" className="flex items-center justify-center gap-2 bg-button-gradient px-4 py-3 rounded-lg text-white text-sm font-semibold hover:opacity-90 transition hover:cursor-pointer">
                   <BsPersonFillAdd />
                   Create Free Account
-                </a>
+                </Link>
+
               </div>
             </div>
           </div>

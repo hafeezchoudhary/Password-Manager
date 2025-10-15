@@ -100,8 +100,9 @@ export default function ForgotPassword() {
         Forgot your password?
       </h1>
       <p className="text-gray-400 text-sm mb-8 text-center max-w-md">
-        Enter your email address and we'll send you a link to reset your password.
+        Enter your email address and we&apos;ll send you a link to reset your password.
       </p>
+
 
       {/* Form Card */}
       <form
