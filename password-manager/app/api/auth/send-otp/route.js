@@ -117,7 +117,7 @@ export const POST = async (req) => {
       <p>This OTP will expire in <strong>5 minutes</strong>.</p>
       <p>If you did not request this, please ignore this email.</p>
       <hr style="border:none; border-top:1px solid #eaeaea; margin: 20px 0;">
-      <p style="font-size: 12px; color: #888;">CipherLock Inc.<br/>Need help? Contact <a href="mailto:support@passwordmanager.com">support@passwordmanager.com</a></p>
+      <p style="font-size: 12px; color: #888;">CipherLock Inc.<br/>Need help? Contact <a href="mailto:cipherlock.pass@gmail.com">cipherlock.pass@gmail.com</a></p>
     </div>
   `
 });

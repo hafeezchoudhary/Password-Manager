@@ -13,7 +13,7 @@ export async function sendLoginAlert(email, ipAddress = 'Unknown') {
     });
 
     await transporter.sendMail({
-      from: `"Your App Name" <${process.env.EMAIL_USER}>`,
+      from: `"Cipher Lock" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: 'New Login Alert 🚨',
       html: `
@@ -21,11 +21,9 @@ export async function sendLoginAlert(email, ipAddress = 'Unknown') {
         <p>We noticed a new login to your account.</p>
         <p><strong>IP Address:</strong> ${ipAddress}</p>
         <p>If this was you, no action is needed. If not, please change your password immediately.</p>
-        <p>Stay safe,<br/>Your App Team</p>
+        <p>Stay safe,<br/>Cipher Lock Team</p>
       `,
     });
-
-    console.log(`Login alert sent to ${email}`);
   } catch (err) {
     console.error('Error sending login alert:', err);
   }
