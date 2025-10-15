@@ -131,9 +131,10 @@ export default function Home() {
                   Zero-Knowledge Architecture
                 </h3>
                 <p className="text-gray-400 text-sm">
-                  We can't see your passwords even if we wanted to. Your master
+                  We can&apos;t see your passwords even if we wanted to. Your master
                   password is the only key to your vault
                 </p>
+
               </div>
 
               {/* Card 3 */}
