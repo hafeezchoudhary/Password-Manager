@@ -1,5 +1,6 @@
 // app/OTP/page.js
 'use client';
+export const dynamic = "force-dynamic"; 
 import React, { useState, useEffect } from 'react';
 import { FiShield } from "react-icons/fi";
 import { FaKey, FaCheckCircle } from "react-icons/fa";
