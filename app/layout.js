@@ -8,8 +8,8 @@ import SessionWrapper from "./SessionWrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "CipherLock",
-  description: "CipherLock is a secure place to store your secrets"
+  title: "SecurePassVault - Your Trusted Password Manager",
+  description: "SecurePassVault is a reliable and user-friendly password manager that helps you store, manage, and protect your passwords with top-notch security features.",
 };
 
 

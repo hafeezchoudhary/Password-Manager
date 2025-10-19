@@ -24,7 +24,7 @@ const Footer = () => {
             <FiShield className="text-white text-2xl"/>
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-white">CipherLock</h2>
+            <h2 className="text-lg font-semibold text-white">SecurePassVault</h2>
             <p className="text-sm text-gray-400">
               Your trusted password manager
             </p>
@@ -60,7 +60,7 @@ const Footer = () => {
 
       {/* Bottom Section */}
       <div className="mt-10 border-t border-gray-700 pt-6 text-center text-sm text-gray-400">
-        &copy; 2024 CipherLock. All rights reserved. 
+        &copy; 2025 SecurePassVault. All rights reserved.
       </div>
     </footer>
   )

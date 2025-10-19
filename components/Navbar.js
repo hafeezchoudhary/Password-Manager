@@ -130,7 +130,7 @@ const Navbar = () => {
               </span>
             </div>
             <div className="leading-tight">
-              <h1 className="text-white font-semibold text-lg">CipherLock</h1>
+              <h1 className="text-white font-semibold text-lg">SecurePassVault</h1>
               <p className="text-gray-400 text-xs">Password Manager</p>
             </div>
           </div>
