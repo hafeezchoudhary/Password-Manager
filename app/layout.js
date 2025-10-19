@@ -9,12 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "CipherLock",
-  description: "CipherLock is a secure place to store your secrets",
-  icons: {
-    icon: [
-      { url: "/favicon.ico" },
-    ],
-  },
+  description: "CipherLock is a secure place to store your secrets"
 };
 
 
