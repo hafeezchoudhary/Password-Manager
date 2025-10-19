@@ -12,8 +12,7 @@ export const metadata = {
   description: "CipherLock is a secure place to store your secrets",
   icons: {
     icon: [
-      { url: "/favicon.ico", 
-       href: "/favicon.png" },
+      { url: "/favicon.ico" },
     ],
   },
 };
