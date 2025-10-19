@@ -1,13 +1,20 @@
-// app/OTP/page.js
 'use client';
 export const dynamic = "force-dynamic"; 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { FiShield } from "react-icons/fi";
 import { FaKey, FaCheckCircle } from "react-icons/fa";
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const OTP = () => {
+  return (
+    <Suspense fallback={<div className="text-white text-center mt-20">Loading...</div>}>
+      <OTPContent />
+    </Suspense>
+  );
+};
+
+const OTPContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");

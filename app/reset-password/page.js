@@ -1,6 +1,7 @@
 'use client';
 export const dynamic = "force-dynamic";
-import { useState, useEffect } from 'react';
+
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FiShield } from 'react-icons/fi';
 import { GoLock } from 'react-icons/go';
@@ -9,7 +10,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function ResetPassword() {
-  // const [token, setToken] = useState('');
+  return (
+    <Suspense fallback={<div className="text-white text-center mt-20">Loading...</div>}>
+      <ResetPasswordContent />
+    </Suspense>
+  );
+}
+
+const ResetPasswordContent = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -19,11 +27,6 @@ export default function ResetPassword() {
   const router = useRouter();
 
   const token = searchParams.get('token'); 
-
-  useEffect(() => {
-    const queryToken = router.query?.token;
-    if (queryToken) setToken(queryToken);
-  }, [router.query]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -76,7 +79,6 @@ export default function ResetPassword() {
         style={{ top: '1rem', right: '1rem', width: 'auto', zIndex: 9999 }}
       />
 
-      {/* Shield Icon */}
       <div className="flex justify-center items-center space-x-3 mt-10">
         <div className="w-16 h-16 bg-button-gradient rounded-2xl flex items-center justify-center">
           <FiShield className="text-white text-5xl" />
@@ -86,12 +88,10 @@ export default function ResetPassword() {
       <h1 className="text-white font-bold text-2xl mt-3 text-center">Reset Your Password</h1>
       <p className="text-gray-400 text-sm mb-8 text-center">Enter a new password to secure your account</p>
 
-      {/* Reset Password Form */}
       <form
         onSubmit={handleSubmit}
         className="bg-[#1a1a1d] rounded-xl p-6 w-full max-w-md shadow-lg space-y-4"
       >
-        {/* New Password */}
         <div className="relative">
           <GoLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <input
@@ -110,7 +110,6 @@ export default function ResetPassword() {
           </span>
         </div>
 
-        {/* Confirm Password */}
         <div className="relative">
           <GoLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <input
@@ -146,4 +145,4 @@ export default function ResetPassword() {
       </div>
     </div>
   );
-}
+};
