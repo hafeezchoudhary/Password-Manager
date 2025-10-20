@@ -4,6 +4,7 @@ import { connectToDatabase } from '@/lib/mongodb';
 import { decrypt } from '@/lib/encryption';
 import bcrypt from 'bcryptjs';
 import { createEmailHash } from '@/lib/emailHash';
+import { sendLoginAlert } from '@/app/api/auth/send-login-alert/route'; // ✅ Direct import
 
 export const authOptions = {
   providers: [
@@ -35,12 +36,9 @@ export const authOptions = {
 
         if (!isMatch) throw new Error('Invalid email or password');
 
-        // ✅ Send login alert AFTER successful login (non-blocking)
-        fetch(`${process.env.NEXTAUTH_URL || ''}/api/auth/send-login-alert`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: decrypt(user.email) }),
-        }).catch(err => console.error("Login alert error:", err));
+        // ✅ Send login alert AFTER successful login (non-blocking, direct call)
+        sendLoginAlert({ json: async () => ({ email: decrypt(user.email) }), headers: { get: () => null } })
+          .catch(err => console.error("Login alert error:", err));
 
         // 4️⃣ Return decrypted user for session
         return {
