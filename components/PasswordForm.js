@@ -14,31 +14,57 @@ const PasswordForm = ({ onClose, onPasswordAdded, editingPassword }) => {
     });
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [passwordStrength, setPasswordStrength] = useState('');
+
+    // Function to generate a random secure password
+    const generatePassword = () => {
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?";
+        let password = "";
+        for (let i = 0; i < 12; i++) {
+            password += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        setFormData(prev => ({ ...prev, password }));
+        checkPasswordStrength(password);
+    };
+
+    // Function to check password strength
+    const checkPasswordStrength = (password) => {
+        let strength = "";
+        const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*]).{8,}$");
+        const mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[A-Z])(?=.*\\d))|((?=.*[a-z])(?=.*\\d))).{6,}$");
+
+        if (strongRegex.test(password)) {
+            strength = "Strong";
+        } else if (mediumRegex.test(password)) {
+            strength = "Medium";
+        } else if (password.length > 0) {
+            strength = "Weak";
+        } else {
+            strength = "";
+        }
+        setPasswordStrength(strength);
+    };
 
     // Update form data when editingPassword changes
     useEffect(() => {
         if (editingPassword) {
-            console.log('Setting form data for editing:', editingPassword);
             setFormData({
                 website: editingPassword.website || '',
                 username: editingPassword.username || '',
                 password: editingPassword.password || '',
                 notes: editingPassword.notes || ''
             });
+            checkPasswordStrength(editingPassword.password || '');
         } else {
-            // Reset form when adding a new password
-            setFormData({
-                website: '',
-                username: '',
-                password: '',
-                notes: ''
-            });
+            setFormData({ website: '', username: '', password: '', notes: '' });
+            setPasswordStrength('');
         }
     }, [editingPassword]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+        if (name === "password") checkPasswordStrength(value);
     };
 
     const handleSubmit = async (e) => {
@@ -71,11 +97,17 @@ const PasswordForm = ({ onClose, onPasswordAdded, editingPassword }) => {
                 setError(errorMessage);
             }
         } catch (error) {
-            const errorMessage = 'Network error. Please try again.';
-            setError(errorMessage);
+            setError('Network error. Please try again.');
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const getStrengthColor = () => {
+        if (passwordStrength === "Strong") return "bg-green-600";
+        if (passwordStrength === "Medium") return "bg-yellow-500";
+        if (passwordStrength === "Weak") return "bg-red-600";
+        return "bg-transparent";
     };
 
     return (
@@ -86,10 +118,7 @@ const PasswordForm = ({ onClose, onPasswordAdded, editingPassword }) => {
                         <h2 className="text-xl font-bold">
                             {editingPassword ? 'Edit Password' : 'Add New Password'}
                         </h2>
-                        <button
-                            onClick={onClose}
-                            className="text-gray-400 hover:text-white"
-                        >
+                        <button onClick={onClose} className="text-gray-400 hover:text-white">
                             <FaTimes />
                         </button>
                     </div>
@@ -142,6 +171,7 @@ const PasswordForm = ({ onClose, onPasswordAdded, editingPassword }) => {
                                 </div>
                             </div>
 
+                            {/* Password Field with Generate + Strength */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-400 mb-1">
                                     Password
@@ -151,23 +181,43 @@ const PasswordForm = ({ onClose, onPasswordAdded, editingPassword }) => {
                                         <FaLock className="text-gray-500" />
                                     </div>
                                     <input
-                                        type={showPassword ? "text" : "password"}   // toggle text/password
+                                        type={showPassword ? "text" : "password"}
                                         name="password"
                                         value={formData.password}
                                         onChange={handleChange}
-                                        className="w-full pl-10 pr-10 py-2 bg-[#0f0f10] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6C5CE7]"
+                                        className="w-full pl-10 pr-24 py-2 bg-[#0f0f10] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6C5CE7]"
                                         placeholder="••••••••"
                                         required
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-300"
+                                        className="absolute inset-y-0 right-8 pr-3 flex items-center text-gray-500 hover:text-gray-300"
                                         aria-label={showPassword ? "Hide password" : "Show password"}
                                     >
                                         {showPassword ? <FaEyeSlash /> : <FaEye />}
                                     </button>
+                                    <button
+                                        type="button"
+                                        onClick={generatePassword}
+                                        className="absolute inset-y-0 right-0 pr-1 px-2 text-xs bg-[#2d2d30] rounded-r-md text-gray-300 hover:text-white"
+                                    >
+                                        Generate
+                                    </button>
                                 </div>
+
+                                {/* Strength Bar */}
+                                {passwordStrength && (
+                                    <div className="mt-2">
+                                        <div className="h-1 w-full bg-gray-700 rounded-full">
+                                            <div className={`h-1 rounded-full ${getStrengthColor()}`} style={{
+                                                width: passwordStrength === "Weak" ? "33%" :
+                                                    passwordStrength === "Medium" ? "66%" : "100%"
+                                            }}></div>
+                                        </div>
+                                        <p className="text-xs text-gray-400 mt-1">{passwordStrength} Password</p>
+                                    </div>
+                                )}
                             </div>
 
                             <div>

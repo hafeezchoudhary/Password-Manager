@@ -67,7 +67,6 @@ const Navbar = () => {
     if (res.ok) {
       // Save toast message to show on home page
       localStorage.setItem("accountDeletedMessage", "Account deleted successfully.");
-      // Sign out and redirect to home
       signOut({ callbackUrl: "/" });
     } else {
       const data = await res.json();
@@ -130,7 +129,7 @@ const Navbar = () => {
               </span>
             </div>
             <div className="leading-tight">
-              <h1 className="text-white font-semibold text-lg">SecurePassVault</h1>
+              <h1 className="text-white font-semibold text-lg">SecurePass Vault</h1>
               <p className="text-gray-400 text-xs">Password Manager</p>
             </div>
           </div>

@@ -106,7 +106,7 @@ const OTPContent = () => {
         <form onSubmit={handleVerifyOtp} className="bg-[#1a1a1d] rounded-xl p-6 w-full max-w-md shadow-lg">
           <div className="mb-5 relative">
             <label className="block text-sm text-white mb-1">Enter OTP</label>
-            <FaKey className="absolute left-3 top-4 text-gray-400" />
+            <FaKey className="absolute left-3 top-9 text-gray-400" />
             <input
               required
               type="text"

@@ -71,13 +71,13 @@ export const POST = async (req) => {
     });
 
     await transporter.sendMail({
-  from: `"CipherLock" <${process.env.EMAIL_USER}>`,
+  from: `"Secure Vault" <${process.env.EMAIL_USER}>`,
   to: email,
-  subject: "Your One-Time Password (OTP) - CipherLock",
+  subject: "Your One-Time Password (OTP) - Secure Vault",
   text: `Your OTP is ${otp}. It will expire in 5 minutes.`,
   html: `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 8px;">
-      <h2 style="color: #333;">CipherLock</h2>
+      <h2 style="color: #333;">Secure Vault</h2>
       <p>Hi,</p>
       <p>Your <strong>One-Time Password (OTP)</strong> is:</p>
       <h1 style="color: #1a73e8; letter-spacing: 4px;">${otp}</h1>
@@ -85,10 +85,10 @@ export const POST = async (req) => {
       <p>If you did not request this, please ignore this email.</p>
       <hr style="border:none; border-top:1px solid #eaeaea; margin: 20px 0;">
       <p style="font-size: 12px; color: #888;">
-        CipherLock Inc.<br/>
-        Need help? Contact <a href="mailto:cipherlock.pass@gmail.com">cipherlock.pass@gmail.com</a>
+        Secure Vault Inc.<br/>
+        Need help? Contact <a href="mailto:SecureVault.pass@gmail.com">SecureVault.pass@gmail.com</a>
       </p>
-      <span style="display:none;">${Date.now()}</span> <!-- tiny unique value to prevent quoted text -->
+      <span style="display:none;">${Date.now()}</span>
     </div>
   `
 });
