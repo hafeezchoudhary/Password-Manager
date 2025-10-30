@@ -4,7 +4,7 @@ import { MongoClient } from 'mongodb';
 import { decrypt } from '@/lib/encryption';
 import bcrypt from 'bcryptjs';
 import { createEmailHash } from '@/lib/emailHash';
-import { sendLoginAlert } from '@/lib/sendLoginAlert';
+import { sendLoginAlert } from '@/lib/send-login-alert';
 
 // ------------------------
 // MongoDB Connection (works in local & Vercel)
