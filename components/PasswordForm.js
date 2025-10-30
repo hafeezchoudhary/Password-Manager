@@ -192,7 +192,7 @@ const PasswordForm = ({ onClose, onPasswordAdded, editingPassword }) => {
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute inset-y-0 right-8 pr-3 flex items-center text-gray-500 hover:text-gray-300"
+                                        className="absolute inset-y-0 right-8 pr-10 flex items-center text-gray-500 hover:text-gray-300"
                                         aria-label={showPassword ? "Hide password" : "Show password"}
                                     >
                                         {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -200,7 +200,7 @@ const PasswordForm = ({ onClose, onPasswordAdded, editingPassword }) => {
                                     <button
                                         type="button"
                                         onClick={generatePassword}
-                                        className="absolute inset-y-0 right-0 pr-1 px-2 text-xs bg-[#2d2d30] rounded-r-md text-gray-300 hover:text-white"
+                                        className="absolute inset-y-0 right-0 pr-1 px-1 text-xs bg-[#2d2d30] rounded-r-md text-gray-300 hover:text-white"
                                     >
                                         Generate
                                     </button>

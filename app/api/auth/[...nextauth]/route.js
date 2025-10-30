@@ -1,11 +1,34 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { connectToDatabase } from '@/lib/mongodb';
+import { MongoClient } from 'mongodb';
 import { decrypt } from '@/lib/encryption';
 import bcrypt from 'bcryptjs';
 import { createEmailHash } from '@/lib/emailHash';
-import { sendLoginAlert } from '@/app/api/auth/send-login-alert/route'; // ✅ Direct import
+import { sendLoginAlert } from '@/lib/sendLoginAlert';
 
+// ------------------------
+// MongoDB Connection (works in local & Vercel)
+// ------------------------
+let cachedClient = global.mongoClient;
+let cachedDb = global.mongoDb;
+
+async function connectToDatabase() {
+  if (cachedClient && cachedDb) return cachedDb;
+
+  const client = new MongoClient(process.env.MONGODB_URI);
+  await client.connect();
+  const db = client.db(); // uses database name from URI
+  cachedClient = client;
+  cachedDb = db;
+  global.mongoClient = client;
+  global.mongoDb = db;
+
+  return db;
+}
+
+// ------------------------
+// NextAuth Config
+// ------------------------
 export const authOptions = {
   providers: [
     CredentialsProvider({
@@ -15,37 +38,50 @@ export const authOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const { email, password } = credentials;
+        try {
+          const { email, password } = credentials;
 
-        if (!email || !password) throw new Error('Email and password are required');
+          if (!email || !password)
+            throw new Error('Email and password are required');
 
-        const db = await connectToDatabase();
+          const db = await connectToDatabase();
 
-        // 1️⃣ Generate emailHash from login email (same as registration)
-        const emailHash = createEmailHash(email);
+          // 1️⃣ Generate emailHash from login email
+          const emailHash = createEmailHash(email);
 
-        // 2️⃣ Find user by emailHash directly (no decryption)
-        const user = await db.collection('users').findOne({ emailHash });
+          // 2️⃣ Find user by emailHash
+          const user = await db.collection('users').findOne({ emailHash });
 
-        if (!user) throw new Error('Invalid email or password');
+          if (!user) throw new Error('Invalid email or password');
 
-        // 3️⃣ Fixed password comparison:
-        // If password starts with "$2", it's a bcrypt hash already (reset password)
-        const storedPassword = user.password.startsWith('$2') ? user.password : decrypt(user.password);
-        const isMatch = await bcrypt.compare(password, storedPassword);
+          // 3️⃣ Password comparison
+          const storedPassword = user.password.startsWith('$2')
+            ? user.password
+            : decrypt(user.password);
+          const isMatch = await bcrypt.compare(password, storedPassword);
 
-        if (!isMatch) throw new Error('Invalid email or password');
+          if (!isMatch) throw new Error('Invalid email or password');
 
-        // ✅ Send login alert AFTER successful login (non-blocking, direct call)
-        sendLoginAlert({ json: async () => ({ email: decrypt(user.email) }), headers: { get: () => null } })
-          .catch(err => console.error("Login alert error:", err));
+          // ✅ Send login alert asynchronously (non-blocking)
+          try {
+            sendLoginAlert(decrypt(user.email)).catch((err) =>
+              console.error("Login alert error:", err)
+            );
+          } catch (e) {
+            console.error("Login alert async error:", e);
+          }
 
-        // 4️⃣ Return decrypted user for session
-        return {
-          id: user._id.toString(),
-          name: decrypt(user.name),
-          email: decrypt(user.email),
-        };
+
+          // 4️⃣ Return decrypted user for session
+          return {
+            id: user._id.toString(),
+            name: decrypt(user.name),
+            email: decrypt(user.email),
+          };
+        } catch (err) {
+          console.error('Authorize error:', err);
+          throw new Error(err.message);
+        }
       },
     }),
   ],
@@ -69,5 +105,8 @@ export const authOptions = {
   debug: false,
 };
 
+// ------------------------
+// Export handler
+// ------------------------
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
