@@ -5,7 +5,7 @@ A **secure web application** for storing, managing, and retrieving passwords saf
 ---
 
 ## ✨ Features
-- 🔒 **Encrypted password storage** for maximum security  
+- 🔒 **Encrypted password storage** for maximum security
 - 👤 **User authentication** to protect data  
 - 📊 **Responsive dashboard** for easy password management  
 - ➕✏️❌ Ability to **add, edit, delete, and search** passwords  
