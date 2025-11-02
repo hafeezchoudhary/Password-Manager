@@ -25,25 +25,25 @@ const OTPContent = () => {
   const [message, setMessage] = useState("");
   const [resendLoading, setResendLoading] = useState(false);
 
-  const handleResendOTP = async () => {
-    setResendLoading(true);
-    setMessage("");
-    try {
-      const res = await fetch("/api/auth/resend-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+  // const handleResendOTP = async () => {
+  //   setResendLoading(true);
+  //   setMessage("");
+  //   try {
+  //     const res = await fetch("/api/auth/send-otp", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ email }),
+  //     });
 
-      const data = await res.json();
-      if (res.ok) setMessage("New OTP sent to your email");
-      else setMessage(data.message || "Failed to resend OTP");
-    } catch (error) {
-      setMessage("Something went wrong. Try again.");
-    } finally {
-      setResendLoading(false);
-    }
-  };
+  //     const data = await res.json();
+  //     if (res.ok) setMessage("New OTP sent to your email");
+  //     else setMessage(data.message || "Failed to resend OTP");
+  //   } catch (error) {
+  //     setMessage("Something went wrong. Try again.");
+  //   } finally {
+  //     setResendLoading(false);
+  //   }
+  // };
 
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
@@ -117,15 +117,6 @@ const OTPContent = () => {
               className="w-full bg-[#1d1d1f] rounded-lg border border-[#333] pl-10 pr-3 py-3 text-center tracking-widest text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]"
             />
           </div>
-
-          <button
-            type="button"
-            onClick={handleResendOTP}
-            disabled={resendLoading}
-            className="w-full text-center text-sm text-indigo-500 hover:text-indigo-700 mt-2"
-          >
-            {resendLoading ? "Sending..." : "Didn't receive the code? Resend OTP"}
-          </button>
 
           <button
             type="submit"

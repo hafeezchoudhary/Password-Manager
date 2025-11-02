@@ -171,6 +171,7 @@ const PasswordForm = ({ onClose, onPasswordAdded, editingPassword }) => {
                                 </div>
                             </div>
 
+
                             {/* Password Field with Generate + Strength */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-400 mb-1">
