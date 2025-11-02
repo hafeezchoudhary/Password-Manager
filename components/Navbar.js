@@ -65,8 +65,6 @@ const Navbar = () => {
     });
 
     if (res.ok) {
-      // Save toast message to show on home page
-      localStorage.setItem("accountDeletedMessage", "Account deleted successfully.");
       signOut({ callbackUrl: "/" });
     } else {
       const data = await res.json();

@@ -6,6 +6,8 @@ import bcrypt from 'bcryptjs';
 import { createEmailHash } from '@/lib/emailHash';
 import { sendLoginAlert } from '@/lib/send-login-alert';
 
+export const runtime = "nodejs"; 
+
 // ------------------------
 // MongoDB Connection (works in local & Vercel)
 // ------------------------
