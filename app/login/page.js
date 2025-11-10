@@ -6,7 +6,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { MdOutlineEmail } from "react-icons/md";
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
-import { useSession, signIn } from 'next-auth/react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -139,9 +139,18 @@ const Login = () => {
                     <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-button-gradient text-white font-bold text-xl">
                         <FiShield className='text-white text-3xl' />
                     </div>
-                    <h1 className="text-white text-2xl font-bold">Welcome Back</h1>
+                    <h1 className="text-white text-2xl font-bold">Welcome</h1>
                     <p className="text-gray-400 text-sm">Access your password vault</p>
                 </div>
+
+                <div className="flex items-center justify-center">
+                    <button onClick={() => signIn("google")} className="px-4 py-2 w-96 justify-center border flex gap-2 text-black border-slate-200 dark:border-slate-700 rounded-lg dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
+                        <img className="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"/>
+                            <span>Login with Google</span>
+                    </button>
+                </div>
+
+                <div className='text-white flex justify-center'>OR</div>
 
                 <div className="bg-[#18181A] rounded-xl p-6 space-y-5 shadow-lg border border-[#222]">
                     {error && <p className="text-red-500 text-sm text-center">{error}</p>}

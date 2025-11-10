@@ -13,29 +13,12 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function Home() {
   const { data: session, status } = useSession();
   const [isLoading, setIsLoading] = useState(true);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     if (status !== 'loading') {
       setIsLoading(false);
     }
   }, [status]);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-
-    const msg = localStorage.getItem("accountDeletedMessage");
-    if (msg) {
-      setTimeout(() => {
-        toast.success(msg, { position: "top-right", autoClose: 2500 });
-        localStorage.removeItem("accountDeletedMessage");
-      }, 100);
-    }
-  }, [mounted]);
 
   if (status === 'loading' || isLoading) {
     return (
@@ -93,12 +76,10 @@ export default function Home() {
           </Link>
         </div>
 
-
-
         <section className=" text-white py-16 px-6 mt-16">
           <div className="max-w-7xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-3">
-              Why Choose SecureVault?
+              Why Choose SecurePass Vault?
             </h2>
             <p className="text-gray-400 mb-12 max-w-2xl mx-auto">
               Built with security first, designed for simplicity. Your passwords
@@ -178,7 +159,7 @@ export default function Home() {
                 Ready to Secure Your Digital Life?
               </h2>
               <p className="text-gray-400">
-                Join thousands of users who trust SecureVault to protect their most important passwords.
+                Join thousands of users who trust SecurePass Vault to protect their most important passwords.
               </p>
 
 
