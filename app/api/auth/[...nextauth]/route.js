@@ -95,12 +95,14 @@ export const authOptions = {
             password: null,
             provider: "google"
           });
-
-          // very IMPORTANT fix: attach mongodb _id to user object so session uses same ID
           user.id = result.insertedId.toString();
         } else {
-          // important for existing google users also
           user.id = exist._id.toString();
+        }
+        try {
+          sendLoginAlert(user.email).catch(err => console.error("Google login alert error:", err));
+        } catch (e) {
+          console.error("Google login alert async error:", e);
         }
       }
       return true;

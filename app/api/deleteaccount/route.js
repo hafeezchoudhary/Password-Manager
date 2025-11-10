@@ -44,8 +44,6 @@ export async function DELETE() {
       });
     }
 
-    console.log("Found user to delete:", userToDelete._id);
-
     // Delete the user document
     await db.collection("users").deleteOne({ _id: userToDelete._id });
 
